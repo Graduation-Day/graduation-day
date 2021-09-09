@@ -5,4 +5,4 @@
 #     java -classpath blackjack-1.0.jar com.games.blackjack.client.Main
 
 #     Note that your application JAR stays on the classpath, regardless of whether you're using additional libraries or not.
-java -classpath Graduation_Day-1.0:"lib/*" com.graduation.client.GraduationDayApplicationClient
+java -classpath Graduation_Day-1.0.jar:"lib/*" com.graduation.client.GraduationDayApplicationClient

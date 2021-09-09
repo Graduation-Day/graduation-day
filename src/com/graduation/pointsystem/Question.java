@@ -3,6 +3,7 @@ package com.graduation.pointsystem;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graduation.client.GameClient;
+import com.graduation.utils.ConsoleColor;
 import com.graduation.utils.Grade;
 import com.graduation.utils.Prompter;
 import com.graduation.utils.readMap;
@@ -79,7 +80,7 @@ public class Question {
                 currentQuestion = sample;
                 cheatCounter = 0;
                 Map<Character, String> possible_answers = new LinkedHashMap<>();
-                System.out.println(Jsoup.parse(sample.getQuestion()).text());
+                System.out.println(ConsoleColor.YELLOW + Jsoup.parse(sample.getQuestion()).text() + ConsoleColor.RESET);
                 List<String> answers = new ArrayList<>();
                 answers.add(sample.getCorrect_answer());
                 for (Object incorrect : sample.getIncorrect_answers()) {
@@ -98,7 +99,7 @@ public class Question {
                     System.out.println(options.getKey() + ") " + options.getValue());
                 }
                 //get user response
-                String userChoice = GameClient.getPrompter().prompt(":>").trim().toUpperCase();
+                String userChoice = GameClient.getPrompter().prompt(":> ").trim().toUpperCase();
                 if (userChoice.matches("QUIT")) {
                     return 0;
                 }
@@ -107,17 +108,18 @@ public class Question {
                 //while user response does not meet certain criteria, keep asking
                 while (userChoice.compareTo("") == 0 || !possible_answers.keySet().contains(userChoice.toUpperCase().charAt(0))) {
                     System.out.println("You can choose from these options: " + Arrays.toString(possible_answers.keySet().toArray(new Character[0])));
-                    userChoice = GameClient.getPrompter().prompt(":>").trim().toUpperCase();
+                    userChoice = GameClient.getPrompter().prompt(":> ").trim().toUpperCase();
                     if (userChoice.matches("QUIT")) {
                         return 0;
                     }
                 }
                 chosen = userChoice.charAt(0);
                 if (possible_answers.get(chosen).compareTo(Jsoup.parse(sample.getCorrect_answer()).text()) == 0) {
-                    System.out.println("correct");
+                    System.out.println(ConsoleColor.GREEN + "Correct. Nice Work!!!" + ConsoleColor.RESET + "\n");
                     counter += 1;
                 } else {
-                    System.out.println("Incorrect: The correct answer is " + sample.getCorrect_answer());
+                    System.out.println(ConsoleColor.RED + "Wrong : The correct answer is " + sample.getCorrect_answer()
+                    + ConsoleColor.RESET + "\n");
                 }
                 counter = counter - cheatCounter;
 //                System.out.println();

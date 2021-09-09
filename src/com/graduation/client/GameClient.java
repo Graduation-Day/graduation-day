@@ -69,6 +69,8 @@ public class GameClient {
         }catch(NullPointerException e){
             System.out.println("You can't go that direction! Quick Try a different cardinal direction please");
             GameAction.getAction();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -140,13 +142,14 @@ public class GameClient {
 
     //Initialize the bully
     public Bully setBully() {
-        String bullyName = prompter.prompt("Please enter bully name below \n", "this is a hole to put bully in");
-        return new Bully(bullyName, 100, true);
+
+        return new Bully("bully", 100, true);
+
     }
 
     //Initialize the player as a FRESHMAN aka first level
     public Player setPlayer() {
-        String userName = prompter.prompt("Please enter your name below \n", "this is a trashCAN to put player in");
+        String userName = prompter.prompt("Please enter your name below: \n");
         return new Player(userName, 0, 100, Grade.FRESHMAN, "Computers");
     }
 

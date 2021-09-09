@@ -1,12 +1,17 @@
-Hello student!
-The next four years of your life will be the most exciting times of your life.
-Your first task is to answer as many questions correctly as you can.  
-You need a 2.0 to graduate.
-Go around each classroom and answer the teacher’s question.
-You may be rewarded with special items.
-Also, avoid the bathroom.
-At any point in the game,
-you can press 'S', 'H', or 'Q.'
-'S' will give the players status.
-'H' will give helpful tips.
-'Q' Will force the game to quit.
+
+
+                                                                       *****************************************************************************************
+                                                                       ************************************ INSTRUCTIONS ***************************************
+                                                                            The next four years of your life will be the most exciting times of your life. *      ******************
+                                                                            1. Your first task is to answer as many questions correctly as you can.        *      *    COMMANDS:   *
+                                                                            2. You need at least 2.0 GPA to pass each class and graduate.                  *      *    go east     *
+                                                                            3. Go around each classroom and answer the questions.                          *      *    go west     *
+                                                                            4. If you fail a class, you will retake it until you pass.                     *      *    go south    *
+                                                                            5. You may be rewarded with special items. Also, avoid the bathroom.           *      *    go north    *
+                                                                            6. At any point in the game, you can press 'S', 'H', or 'Q.' :                 *      *    run         *
+                                                                                    'S' ---> will give the players status.                                 *      *    fight       *
+                                                                                    'H' ---> will give helpful tips.                                       *      *    cheat       *
+                                                                                    'Q' ---> Will force the game to quit.                                  *      ******************
+                                                                   *                                                                                       *
+                                                                   *****************************************************************************************
+

@@ -16,7 +16,6 @@ out
 .mtj.tmp/
 
 # Package Files #
-*.cmd
 *.iml
 *.xml
 *.war

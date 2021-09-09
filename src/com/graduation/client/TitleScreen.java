@@ -1,5 +1,13 @@
 package com.graduation.client;
 
+import com.indvd00m.ascii.render.Render;
+import com.indvd00m.ascii.render.api.ICanvas;
+import com.indvd00m.ascii.render.api.IContextBuilder;
+import com.indvd00m.ascii.render.api.IRender;
+import com.indvd00m.ascii.render.elements.PseudoText;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,19 +20,10 @@ class TitleScreen {
     private static String banner;
     Scanner titleObj = new Scanner(System.in);
     String keystroke = titleObj.nextLine().toLowerCase();
-    String credits = "This game was produced by Hongyi Qu, Pierre Gober, Stephen Yeboah\n" +
-            " Jauric Flowers.\n";
 
-    String help = "You must answer a series of questions to get a passing grade.\n" +
-            "You need 4 badges in order to graduate high school. Also,\n" +
-            "watch out for the bully and collect hidden items.\n" +
-            "Actions:\n" +
-            "\n" +
-            "GO [north, south, east, west, up, down]\n" +
-            "\n" +
-            "GET [item]\n" +
-            "\n" +
-            "INV/INVENTORY";
+
+    String help = TitleScreen.readTXT("help");
+
 
     public void inputOptions(String keystroke) {
         //We will use this later during the game as an option to bring
@@ -33,9 +32,6 @@ class TitleScreen {
         switch (keystroke) {
             case "q":
                 System.exit(0);
-                break;
-            case "z":
-                System.out.println(credits);
                 break;
             case "h":
                 System.out.println(help);
@@ -49,11 +45,14 @@ class TitleScreen {
 
 
     //Displays title and instructions
-    public static void displayInstructions() {
+    public static void displayInstructions()  {
         System.out.println(TitleScreen.readTXT("Welcome_Grad_Day"));
+
         System.out.println(TitleScreen.readTXT("Instructions"));
 
-    }
+
+        }
+
 
     public static String readTXT(String name) {
         try {
