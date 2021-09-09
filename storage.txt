@@ -1,1 +1,1 @@
-"{\"totalSubject\":0}"
+"{\"health\":10,\"totalSubject\":0,\"name\":\"stephen\",\"inventory\":[\"notebook\"]}"
