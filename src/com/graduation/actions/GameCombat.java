@@ -6,14 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graduation.client.GameClient;
 import com.graduation.elements.Bully;
 import com.graduation.elements.Player;
-import com.graduation.utils.ConsoleColor;
-import com.graduation.utils.Prompter;
-import com.graduation.utils.TextFileReader;
-import com.graduation.utils.readMap;
+import com.graduation.utils.*;
 
 //import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
 
 
+import javax.sound.sampled.Clip;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ public class GameCombat {
     private static Scanner action = new Scanner(System.in);
     private static int bullyHitPoints = (int) (Math.random() * 25);
     private static JsonNode data;
-
+    static Sound sound = new Sound();
     private GameCombat() {
     }
 
@@ -41,7 +39,8 @@ public class GameCombat {
                 "                                   ******************************************************************************************* "
                         + ConsoleColor.RESET);
         System.out.println(fL.get(0));
-        System.out.println(Bully.getName() + " has spotted you!");
+        System.out.println(ConsoleColor.RED_BOLD + "Gee Whirlickers Batman. A wild Bully appears! It has spotted you! Prepare for Death " + ConsoleColor.RESET);
+        Thread.sleep(2000);
         fight();
     }
 
@@ -82,12 +81,15 @@ public class GameCombat {
                 case "run":
                     // Step 1: RNG to find out if you can run successfully -- you have a 12% chance
                     if ((int) (Math.random() * 100) >= 12) {
+                        sound.playSoundClip("Sounds/catchmeoutside.wav");
                         System.out.println(fL.get(12));
                         GameAction.getAction();
+                        Thread.sleep(2000);
                     } else {
                         // Massive damage if caught trying to run
                         int rightHook = Player.getHealth() - 50;
                         Player.setHealth(rightHook);
+                        sound.playSoundClip("Sounds/oof.wav");
                         System.out.println(fL.get(13));
                         fight();
                     }
@@ -96,34 +98,41 @@ public class GameCombat {
                     // Step 1: RNG for number with just your fists && Negate the points from the
                     // Bully's health-- allows for a one hit kill
                     System.out.println(fL.get(30));
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                     int kick = (int) (Math.random() * 100);
                     Bully.setHealth(Bully.getHealth() - kick);
                     // Step 2: Conditional dialogue
                     if (kick > 80) {
+                        sound.playSoundClip("Sounds/superstrongpunch.wav");
                         System.out.println(fL.get(14) + " " + kick + " damage!!");
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
                     } else if (kick > 50) {
+                        sound.playSoundClip("Sounds/strongpunch.wav");
                         System.out.println(fL.get(15) + " " + kick + " to the bully!!");
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
                     } else {
+                        sound.playSoundClip("Sounds/PUNCH.wav");
                         System.out.println(fL.get(16) + " " + kick + " to the bully!!");
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
                     }
                     // Step 3: Recursion if needed
                     if (Bully.getHealth() <= 0) {
                         System.out.println(fL.get(17) + Bully.getName() + " " + fL.get(18));
-                        Thread.sleep(3000);
+                        sound.playSoundClip("Sounds/pokemonwinfight.wav");
+                        Thread.sleep(2000);
                         GameAction.getAction();
                     } else {
                         // Bully's turn;
                         bullyAttack();
+                        sound.playSoundClip("Sounds/bullylaugh.wav");
+                        Thread.sleep(2000);
                         fight();
                     }
                     break;
                 case "use":
                     if (Player.getInventory().contains("Red Bull")) {
                         Player.setHealth(Player.getHealth() + 100);
+                        sound.playSoundClip("Sounds/opencan.wav");
                         GameClient.items.remove("Red Bull");
                         fight();
                     }
@@ -161,10 +170,15 @@ public class GameCombat {
         // Step 2: Conditional dialogue
         if (bullyHitPoints > 50) {
             System.out.println(fL.get(24) + " " + bullyHitPoints + " " + fL.get(25));
+            Thread.sleep(2000);
         } else if (bullyHitPoints > 25) {
             System.out.println(fL.get(26) + " " + bullyHitPoints + " " + fL.get(27));
+            Thread.sleep(2000);
         } else {
+
+
             System.out.println(fL.get(28) + " " + bullyHitPoints + " " + fL.get(29));
+            Thread.sleep(2000);
         }
     }
 }

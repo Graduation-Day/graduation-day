@@ -6,6 +6,7 @@ import com.graduation.elements.Player;
 import com.graduation.utils.ConsoleColor;
 import com.graduation.utils.Grade;
 import com.graduation.utils.Prompter;
+import com.graduation.utils.Sound;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -22,7 +23,7 @@ public class PointSystem {
             Arrays.asList("maths", "computers", "geography", "history"));
     private static boolean isNewLevel = false;
     public static Player currentPlayer = null;
-
+    static Sound sound = new Sound();
 
     private double getScore(int correct) {
         double current_class = 0;
@@ -47,15 +48,17 @@ public class PointSystem {
     }
 
     public static void teacherQuestions(String subject, Grade level, Player player) throws Exception {
-
+        Sound sound = new Sound();
         currentPlayer = player;
 
         // check if a subject already passed and continue loading questions accordingly
         if (!player.getSubjectTaken().contains(subject)) {
+
             Question questions = new Question();
             if (player.getSubjectTaken().size() == 0) {
                 isNewLevel = false;
             }
+            sound.playSoundClip("Sounds/gotcha.wav");
             PointSystem pointSystem = new PointSystem();
             // initialize classroom score and class fail counter before starting question
             int score = 0;
@@ -70,14 +73,16 @@ public class PointSystem {
                         classFailCount++;
                         if (classFailCount == 3) {
                             System.out.println(ConsoleColor.RED_BOLD + "\n\n            You have failed this class 3 "
-                                    + "times and hence lost the game. You will need to re-apply for the school and "
+                                    + "times and can never graduate. You can't tell your parents, they'll kill you. You will need to re-apply for the school and "
                                     + "re-start the game." + ConsoleColor.RESET);
+                            sound.playSoundClip("Sounds/youdied.wav");
                             Thread.sleep(5000);
                             System.exit(0);
                         }
                         System.out.println(ConsoleColor.RED + "\n\n                                               "
                                 + "Your class GPA of " + pointSystem.getScore(score) + " is less than 2.0, you need to take " + subject + " again."
                                 + ConsoleColor.RESET);
+                        sound.playSoundClip("Sounds/ohhhno.wav");
                         System.out.println();
                         score = questions.generateQuestions(subject, level);
                     }
@@ -85,7 +90,9 @@ public class PointSystem {
                     player.getSubjectTaken().add(subject);
                     // set the player's GPA
                     player.setCredit(pointSystem.getCumulativeScore(score, player.getSubjectTaken().size()));
-//
+                    sound.playSoundClip("Sounds/tada.wav");
+                    System.out.println(player.getCredit());
+
                     // determine if the player has meet the criteria to change its level
                     // from freshman->sophomore->junior->senior
                     // based on a gpa greater than or equal to 2.0 and having taken all the core
@@ -103,7 +110,8 @@ public class PointSystem {
     public static void promptElectives() throws Exception {
         boolean run = true;
         while (run) {
-            System.out.println("please choose an elective from the following Mythology, Art, Vehicles, Politics");
+            System.out.println(ConsoleColor.GREEN + "Your guidance counselor admires your achievements but notices you skipped on electives all year. He wont let you pass until you take one" + ConsoleColor.RESET);
+            System.out.println(ConsoleColor.GREEN + "Please choose an elective from the following Mythology, Art, Vehicles, Politics" + ConsoleColor.RESET);
             String userChoice = GameClient.getPrompter().prompt(":> ").trim().toUpperCase();
             Question questions = new Question();
             if (userChoice.matches("ART")) {
@@ -137,6 +145,8 @@ public class PointSystem {
             // display a congratulation message on moving to the next grade
             System.out.println(ConsoleColor.GREEN + "\n\n            CONGRATULATIONS!!!!, you've passed "
                     + player.getGrade() + " level." + ConsoleColor.RESET);
+            sound.playSoundClip("Sounds/thatwaseasy.wav");
+            Thread.sleep(2000);
             isNewLevel = true;
             switch (player.getGrade()) {
                 case FRESHMAN:
@@ -152,6 +162,8 @@ public class PointSystem {
                     System.out.println(ConsoleColor.GREEN + "\n\n            You have successfully graduated. " +
                             "\n            Your GRADUATION DAY IS FINALLY HERE. GOOD LUCK with your future endeavors."
                             + ConsoleColor.RESET);
+                    sound.playSoundClip("Sounds/numberone.wav");
+                    Thread.sleep(15000);
                     System.exit(0);
             }
 

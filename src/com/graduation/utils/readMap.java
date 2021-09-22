@@ -65,7 +65,7 @@ public class readMap {
             map = importTXT("Banner/map-" + GameClient.getPlayer().getGrade().toString() + ".txt");
             mapCode.replace(GameClient.getPlayer().getLocation(), character_me);
             newMap = String.format(map, mapCode.get("Computers"), mapCode.get("History"),
-                    mapCode.get("Gym"),  mapCode.get("Hallway"), mapCode.get("Geography"),
+                    mapCode.get("Gym"), mapCode.get("Hallway"), mapCode.get("Geography"),
                     mapCode.get("Cafeteria"), mapCode.get("Maths"));
         }
         return newMap;

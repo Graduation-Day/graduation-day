@@ -44,7 +44,7 @@ public class Prompter {
     static float volume;
     private ArrayList<String> commands = new ArrayList<>(Arrays.asList("s", "h", "q", "cheat", "volume up",
             "volume down", "volume mute", "volume unmute", "hack", "quit"));
-
+    Sound sound = new Sound();
     /**
      * Creates a {@code Scanner}-based prompter object, that delegates to the {@code Scanner}
      * for all input.  All input is read (and returned) as a single line of text.
@@ -94,6 +94,7 @@ public class Prompter {
             System.out.print(ConsoleColor.YELLOW_BOLD + promptText + ConsoleColor.RESET);
             response = scanner.nextLine().toLowerCase();
             if (response.matches("s")) {
+                sound.playSoundClip("Sounds/menuselect.wav");
                 //add function to show player status
                 System.out.println(GameClient.getPlayer().getGrade().toString());
                 System.out.println(readMap.convertedMap());
@@ -106,17 +107,21 @@ public class Prompter {
                 return response;
 
             } else if (response.matches("h")) {
+                sound.playSoundClip("Sounds/menuselect.wav");
                 System.out.println(
                         ConsoleColor.YELLOW_BOLD + "Use the following actions:\n" + ConsoleColor.RESET +
                                 readMap.importTXT("Banner/helper.txt"));
                 return response;
                 //quit the game by inputting Q/q
             } else if (response.matches("q")) {
+                sound.playSoundClip("Sounds/menuselect.wav");
                 System.out.println("Do you want to save before exiting? (yes/no)");
                 response = scanner.nextLine().trim().toLowerCase();
                 if (response.matches("yes|y")) {
                     saveCurrentState();
                 }
+                sound.playSoundClip("Sounds/windowsshutoff.wav");
+                Thread.sleep(3000);
                 System.exit(0);
 
             } else if (response.matches("cheat")) {
@@ -158,11 +163,14 @@ public class Prompter {
             } else if (response.matches("hack")) {
                 //get the current room
                 hackClass();
+                System.out.println(ConsoleColor.GREEN + " NOTHING CAN STOP YOU " + ConsoleColor.RESET);
+                sound.playSoundClip("Sounds/hackerman.wav");
+                Thread.sleep(1000);
                 return "quit";
             } else if (response.matches("give apple")) {
                 //
                 if (Player.getInventory().contains("Apple")) {
-
+                    sound.playSoundClip("Sounds/thanks.wav");
                     hackClass();
 
                     Player.getInventory().remove("Apple");  

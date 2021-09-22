@@ -9,10 +9,10 @@ import com.graduation.elements.Player;
 import com.graduation.pointsystem.PointSystem;
 import com.graduation.utils.ConsoleColor;
 import com.graduation.utils.Grade;
-import com.graduation.utils.KeyPressed;
 import com.graduation.utils.Prompter;
 import com.graduation.utils.Sound;
 
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
@@ -31,7 +31,8 @@ public class GameClient {
     public static List<String> items;
 
 
-    private Sound sound = new Sound();
+
+    private static Sound sound = new Sound();
 
 
     public GameClient(Prompter prompter) {
@@ -40,22 +41,21 @@ public class GameClient {
 
     public void initialize() throws Exception {
         // play game start sound
-        sound.playSoundClip("Sounds/southpark1.wav");
+        Clip southpark = sound.SoundTrack("Sounds/southpark1.wav");
         // create player and bully instance
         player = setPlayer();
         bully = setBully();
 
         // clear screen
         Prompter.clearScreen();
-
+        southpark.stop();
         //Step 1a -- Generate the location info from the json
         getLevelDetails("desc");
-
         // Some conditional seeing if its is a subject
+
         if (notSubject.contains(Player.getLocation())) {
             continueJourney(false);
         } else {
-            // Call method to initialize the question sequence
             PointSystem.teacherQuestions(Player.getLocation().toLowerCase(), Player.getGrade(), player);
         }
     }
@@ -64,6 +64,7 @@ public class GameClient {
         // Grab the previous and read the location according to direction within it's
         // JSON properties
         try {
+
             String nextLoc = prevRoom.get(location).textValue();
             player.setLocation(nextLoc);
             Prompter.clearScreen();
@@ -80,11 +81,13 @@ public class GameClient {
                 if (combat >= 50) {
                     System.out.println("Uh oh...  bully is here. And they spot you. Engaging in combat ");
                     // Engage in combat
+                    sound.playSoundClip("Sounds/pokemonstartfight.wav");
                     GameCombat.initializeCombatScene();
                 } else {
                     continueJourney(false);
                 }
             }
+            //bully has spotted you
             // Catch if the direction is null
         } catch (NullPointerException e) {
             System.out.println("You can't go that direction! Quick Try a different cardinal direction please");

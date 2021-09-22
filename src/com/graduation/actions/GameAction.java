@@ -4,6 +4,7 @@ import com.graduation.client.GameClient;
 import com.graduation.elements.Player;
 import com.graduation.utils.ConsoleColor;
 import com.graduation.utils.Prompter;
+import com.graduation.utils.Sound;
 import com.graduation.utils.readMap;
 import jdk.swing.interop.SwingInterOpUtils;
 
@@ -11,7 +12,12 @@ import java.util.Scanner;
 
 public class GameAction {
 
+    private static Scanner action = new Scanner(System.in);
+    Sound sound = new Sound();
+
+
     public static void getAction() throws Exception {
+
         Prompter.clearScreen();
         System.out.println(readMap.convertedMap());
         System.out.println(ConsoleColor.GREEN_BOLD
@@ -40,6 +46,7 @@ public class GameAction {
                     System.out.println(ConsoleColor.RED + "\n\nAht aht.. you didn't enter a valid cardinal direction"
                             + ConsoleColor.RESET);
                     getAction();
+
                 }
                 break;
             case "get":
