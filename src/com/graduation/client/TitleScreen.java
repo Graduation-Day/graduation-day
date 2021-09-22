@@ -1,6 +1,8 @@
 package com.graduation.client;
 
+import com.graduation.pointsystem.Question;
 import com.graduation.utils.ConsoleColor;
+import com.graduation.utils.Grade;
 import com.indvd00m.ascii.render.Render;
 import com.indvd00m.ascii.render.api.ICanvas;
 import com.indvd00m.ascii.render.api.IContextBuilder;
@@ -21,11 +23,14 @@ class TitleScreen {
     private static String banner;
 
     //Displays title and instructions
-    public static void displayInstructions()  {
+    public static void displayInstructions() throws Exception {
 
         System.out.println(ConsoleColor.GREEN + TitleScreen.readTXT("Welcome_Grad_Day") + ConsoleColor.RESET);
 
         System.out.println(TitleScreen.readTXT("Instructions"));
+
+
+
 
         }
 

@@ -7,108 +7,108 @@
     "Maths": {
       "south": "Computers",
       "east": "Cafeteria",
-      "desc": "Mrs.Peterson's Maths class... omg I'm in trouble"
+      "desc":  "                                          Mrs.Peterson's Maths class... omg I'm in trouble"
     },
     "Cafeteria": {
       "west": "Maths",
       "east": "History",
-      "item": "Big Mac",
-      "desc": "Looks like there has been a food fight in the cafeteria.... You see something tasty on the ground"
+      "item": "Apple",
+      "desc": "                        Looks like there has been a food fight in the cafeteria.... You see something tasty on the ground"
     },
     "History": {
       "west": "Cafeteria",
       "north": "Hallway",
-      "desc": "A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
+      "desc": "           A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
     },
     "Hallway": {
       "south": "History",
       "north": "Geography",
-      "item": "Sharpened Pencil",
-      "desc": "Empty hallway with flicking lights... you saw someone move fast in the background."
+      "item": "Red Bull",
+      "desc": "                                 Empty hallway with flicking lights... you saw someone move fast in the background."
     },
     "Geography": {
       "south": "Hallway",
       "west": "Gym",
-      "desc": "Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
+      "desc": "                            Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
     },
     "Gym": {
       "east": "Geography",
-      "desc": "Dodgeballs are on the floor...",
+      "desc": "                                                         Dodgeballs are on the floor...",
       "item": "Dodgeball"
     }
   },
   "SOPHOMORE": {
     "Computers": {
       "north": "Maths",
-      "desc": "You are in a computer room, something tells you that you rather not be here. Also you get the feeling you are being watched. To the north is a Math class "
+      "desc": "    You are in a computer room, something tells you that you rather not be here. Also you get the feeling you are being watched. To the north is a Math class "
     },
     "Maths": {
       "west": "Cafeteria",
       "south": "Computers",
       "north": "Hallway",
-      "desc": "Mrs.Peterson's Maths class... omg I'm in trouble"
+      "desc": "                                                  Mrs.Peterson's Maths class... omg I'm in trouble"
     },
     "Cafeteria": {
       "east": "Maths",
       "north": "History",
-      "item": "Fire Extinguisher",
-      "desc": "Looks like there has been a food fight in the cafeteria.... You see something red on the ground"
+      "item": "Red Bull",
+      "desc": "                                 Looks like there has been a food fight in the cafeteria.... You see something red on the ground"
     },
     "History": {
       "south": "Cafeteria",
       "east": "Hallway",
       "north": "Gym",
-      "desc": "A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
+      "desc": "                   A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
     },
     "Hallway": {
       "south": "Maths",
       "north": "Geography",
       "west": "History",
-      "item": "Redbull",
-      "desc": "Empty hallway with flicking lights... you saw someone move fast in the background."
+      "item": "Red Bull",
+      "desc": "                                       Empty hallway with flicking lights... you saw someone move fast in the background."
     },
     "Geography": {
       "south": "Hallway",
       "west": "Gym",
-      "desc": "Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
+      "desc": "                                    Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
     },
     "Gym": {
       "south": "History",
       "east": "Geography",
-      "desc": "Dodgeballs are on the floor...",
+      "desc": "                                                                Dodgeballs are on the floor...",
       "item": "Dodgeball"
     }
   },
   "JUNIOR": {
     "Geography": {
       "east": "History",
-      "desc": "Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
+      "desc": "                                      Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
     },
     "Hallway": {
       "east": "Gym",
       "south": "Cafeteria",
-      "item": "Redbull",
-      "desc": "Empty hallway with flicking lights... you saw someone move fast in the background. You may need to grab a weapon"
+      "item": "Red Bull",
+      "desc": "                              Empty hallway with flicking lights... you saw someone move fast in the background. You may need to grab a weapon"
     },
     "Computers": {
       "south": "Gym",
-      "desc": "You are in a computer room, something tells you that you rather not be here. Also you get the feeling you are being watched. To the north is a Math class "
+      "desc": "                   You are in a computer room, something tells you that you rather not be here. Also you get the feeling you are being watched. To the north is a Math class "
     },
     "Maths": {
       "south": "History",
       "north": "Cafeteria",
-      "desc": "Mrs.Peterson's Maths class... omg I'm in trouble"
+      "desc": "                                                          Mrs.Peterson's Maths class... omg I'm in trouble"
     },
     "Cafeteria": {
       "south": "Maths",
       "north": "Hallway",
       "item": "Apple",
-      "desc": "Looks like there has been a food fight in the cafeteria.... You see something shiny on the ground"
+      "desc": "                                            Looks like there has been a food fight in the cafeteria.... You see something shiny on the ground"
     },
     "History": {
       "west": "Geography",
       "north": "Maths",
-      "desc": "A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
+      "desc": "                              A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
     },
     "Gym": {
       "north": "Computers",
@@ -120,40 +120,40 @@
   "SENIOR": {
     "Maths": {
       "north": "Cafeteria",
-      "desc": "Mrs.Peterson's Maths class... omg I'm in trouble"
+      "desc": "                                                                         Mrs.Peterson's Maths class... omg I'm in trouble"
     },
     "Hallway": {
       "north": "History",
       "east": "Geography",
       "item": "Exam Answers",
-      "desc": "Empty hallway with flicking lights... you saw someone move fast in the background. There's a open locker"
+      "desc": "                                                   Empty hallway with flicking lights... you saw someone move fast in the background. There's a open locker"
     },
     "Computers": {
       "south": "Gym",
-      "desc": "You are in a computer room, something tells you that you rather not be here. Also you get the feeling you are being watched. To the north is a Math class "
+      "desc": "                        You are in a computer room, something tells you that you rather not be here. Also you get the feeling you are being watched. To the north is a Math class "
     },
     "Cafeteria": {
       "south": "Maths",
       "north": "Geography",
       "item": "Helmet",
-      "desc": "Looks like there has been a food fight in the cafeteria.... You see something tasty on the ground"
+      "desc": "                                                         Looks like there has been a food fight in the cafeteria.... You see something tasty on the ground"
     },
     "History": {
       "east": "Gym",
       "south": "Hallway",
-      "desc": "A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
+      "desc": "                                       A pile of books sits in a corner... You see see the substitute teacher Mr.Korenick. He's heading toward you wanting to ask some questions"
     },
     "Geography": {
       "south": "Cafeteria",
       "west": "Hallway",
       "north": "Gym",
-      "desc": "Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
+      "desc": "                                                               Just a regular Geo class.... or is it... You get a tap on the shoulder... it's Mrs.Beaverwich"
     },
     "Gym": {
       "west": "History",
       "south": "Geography",
       "north": "Computers",
-      "desc": "Dodgeballs are on the floor...",
+      "desc": "                                                                                               Dodgeballs are on the floor...",
       "item": "Dodgeball"
     }
   }

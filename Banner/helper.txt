@@ -1,0 +1,8 @@
+     CLASSROOM Commands              |     OTHER Commands
+     ------------------------------------------------------------
+     Hack (to bypass the class)      |     S (to view status)
+     Cheat (to get correct answer)   |     Q (to quit the game)
+     Show items (to view inventory)  |     H (for help)
+     Volume up or down               |
+     VOLUME mute or unmute           |
+     Give apple (to bribe teacher)

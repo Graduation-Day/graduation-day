@@ -3,6 +3,7 @@ package com.graduation.client;
 
 import com.graduation.client.GameClient;
 
+//import com.graduation.pointsystem.Elective;
 import com.graduation.utils.TextFileReader;
 import org.junit.Assert;
 import org.junit.Test;
@@ -66,6 +67,12 @@ public class PlayerDashTest {
         assertNotEquals(23,actual);
 
     }
+
+//    @Test
+//    public void testValidation() throws Exception {
+//        Elective e = new Elective("history");
+//        e.checkerOfUserInput();
+//    }
 
 
 

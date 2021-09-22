@@ -9,10 +9,10 @@ import com.graduation.elements.Player;
 import com.graduation.pointsystem.PointSystem;
 import com.graduation.utils.ConsoleColor;
 import com.graduation.utils.Grade;
-import com.graduation.utils.KeyPressed;
 import com.graduation.utils.Prompter;
 import com.graduation.utils.Sound;
 
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
@@ -28,10 +28,11 @@ public class GameClient {
     private static JsonNode data;
     private static JsonNode prevRoom;
     private static final List<String> notSubject = new ArrayList<>(Arrays.asList("gym", "cafeteria", "hallway"));
+    public static List<String> items;
 
 
-    private Sound sound = new Sound();
 
+    private static Sound sound = new Sound();
 
 
     public GameClient(Prompter prompter) {
@@ -40,25 +41,21 @@ public class GameClient {
 
     public void initialize() throws Exception {
         // play game start sound
-        sound.playSoundClip("Sounds/southpark1.wav");
+        Clip southpark = sound.SoundTrack("Sounds/southpark1.wav");
         // create player and bully instance
         player = setPlayer();
         bully = setBully();
 
         // clear screen
         Prompter.clearScreen();
-
-        // Generate the location info from the json
-
+        southpark.stop();
         //Step 1a -- Generate the location info from the json
         getLevelDetails("desc");
-
         // Some conditional seeing if its is a subject
-        if (Player.getLocation().equals("cafeteria") || Player.getLocation().equals("gym")
-                || Player.getLocation().equals("hallway")) {
+
+        if (notSubject.contains(Player.getLocation())) {
             continueJourney(false);
         } else {
-            // Call method to initialize the question sequence
             PointSystem.teacherQuestions(Player.getLocation().toLowerCase(), Player.getGrade(), player);
         }
     }
@@ -67,9 +64,10 @@ public class GameClient {
         // Grab the previous and read the location according to direction within it's
         // JSON properties
         try {
+
             String nextLoc = prevRoom.get(location).textValue();
             player.setLocation(nextLoc);
-            System.out.println("You are now in " + ConsoleColor.GREEN + nextLoc + ConsoleColor.RESET);
+            Prompter.clearScreen();
             getLevelDetails("desc");
             displayRoomInventory();
 
@@ -83,11 +81,13 @@ public class GameClient {
                 if (combat >= 50) {
                     System.out.println("Uh oh...  bully is here. And they spot you. Engaging in combat ");
                     // Engage in combat
+                    sound.playSoundClip("Sounds/pokemonstartfight.wav");
                     GameCombat.initializeCombatScene();
                 } else {
                     continueJourney(false);
                 }
             }
+            //bully has spotted you
             // Catch if the direction is null
         } catch (NullPointerException e) {
             System.out.println("You can't go that direction! Quick Try a different cardinal direction please");
@@ -101,7 +101,7 @@ public class GameClient {
         JsonNode roomInventory = null;
         if (isValidKey(data, Player.getLocation(), Player.getGrade(), "item")) {
             roomInventory = getDetails(data, Player.getLocation(), Player.getGrade(), "item");
-            System.out.println("Room Inventory :" + roomInventory);
+            System.out.println("Room Inventory :" + ConsoleColor.GREEN + roomInventory + ConsoleColor.RESET + "\n");
         }
         return roomInventory;
     }
@@ -120,7 +120,7 @@ public class GameClient {
                     continueJourney(false);
                 } else {
                     // Method to add the item to the player's backpack
-                    List<String> items = player.getInventory();
+                    items = player.getInventory();
                     items.add(filteredData.textValue());
                     System.out.println(ConsoleColor.GREEN + "Successfully added " + filteredData + " to your backpack!"
                             + ConsoleColor.RESET);
@@ -128,7 +128,7 @@ public class GameClient {
                 }
             } else {
 
-                System.out.println("\n\n            " + ConsoleColor.GREEN + filteredData + ConsoleColor.RESET);
+                System.out.println("\n\n            " + ConsoleColor.GREEN + filteredData.asText() + ConsoleColor.RESET);
             }
         } catch (IOException e) {
             System.out.println(e);
@@ -147,12 +147,10 @@ public class GameClient {
     //Method to initialize the action to move
     public static void continueJourney(boolean val) throws Exception {
         //Have a conditional that switch when it's a new level
-
         if (val) {
             getLevelDetails("desc");
             PointSystem.teacherQuestions(Player.getLocation().toLowerCase(), Player.getGrade(), player);
         } else {
-            //System.out.println("Whats your next move?");
             GameAction.getAction();
         }
     }
@@ -186,7 +184,7 @@ public class GameClient {
     }
 
     // Method to check if valid direction at a given level and room
-    private static boolean isValidKey(JsonNode node, String location, Grade grade, String key) {
+    static boolean isValidKey(JsonNode node, String location, Grade grade, String key) {
         return node.get(String.valueOf(grade)).get(location).has(key);
     }
 
@@ -207,9 +205,16 @@ public class GameClient {
         return new Bully("bully", 100, true);
     }
 
-    // Initialize the player as a FRESHMAN aka first level
+    // Initialize the player as a FRESHMAN aka first level with user provided name input
     public Player setPlayer() throws Exception {
-        String userName = prompter.prompt("Please enter your name below: \n");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(ConsoleColor.YELLOW + "Please enter your name below: " + ConsoleColor.RESET);
+        String userName = scanner.nextLine();
+        // Validate user name is not blank or is not in the list of reserved command keywords
+        while (userName.isBlank() || prompter.getCommands().contains(userName.toLowerCase())) {
+            System.out.println(ConsoleColor.YELLOW + "Please enter your name below: " + ConsoleColor.RESET);
+            userName = scanner.nextLine();
+        }
         return new Player(userName, 0, 100, Grade.FRESHMAN, "Computers");
     }
 

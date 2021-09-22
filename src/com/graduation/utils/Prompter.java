@@ -2,6 +2,7 @@ package com.graduation.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.graduation.actions.GameCombat;
 import com.graduation.client.GameClient;
 import com.graduation.elements.Player;
 import com.graduation.pointsystem.PointSystem;
@@ -11,9 +12,7 @@ import org.w3c.dom.ls.LSOutput;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * <p>
@@ -43,7 +42,9 @@ import java.util.Scanner;
 public class Prompter {
     private Scanner scanner;
     static float volume;
-
+    private ArrayList<String> commands = new ArrayList<>(Arrays.asList("s", "h", "q", "cheat", "volume up",
+            "volume down", "volume mute", "volume unmute", "hack", "quit"));
+    Sound sound = new Sound();
     /**
      * Creates a {@code Scanner}-based prompter object, that delegates to the {@code Scanner}
      * for all input.  All input is read (and returned) as a single line of text.
@@ -93,6 +94,7 @@ public class Prompter {
             System.out.print(ConsoleColor.YELLOW_BOLD + promptText + ConsoleColor.RESET);
             response = scanner.nextLine().toLowerCase();
             if (response.matches("s")) {
+                sound.playSoundClip("Sounds/menuselect.wav");
                 //add function to show player status
                 System.out.println(GameClient.getPlayer().getGrade().toString());
                 System.out.println(readMap.convertedMap());
@@ -105,19 +107,21 @@ public class Prompter {
                 return response;
 
             } else if (response.matches("h")) {
+                sound.playSoundClip("Sounds/menuselect.wav");
                 System.out.println(
                         ConsoleColor.YELLOW_BOLD + "Use the following actions:\n" + ConsoleColor.RESET +
-                                "HACK (to bypass the class)\n" +
-                                "S (to view status)\n" +
-                                "Q (to quit the game)");
+                                readMap.importTXT("Banner/helper.txt"));
                 return response;
                 //quit the game by inputting Q/q
             } else if (response.matches("q")) {
+                sound.playSoundClip("Sounds/menuselect.wav");
                 System.out.println("Do you want to save before exiting? (yes/no)");
                 response = scanner.nextLine().trim().toLowerCase();
                 if (response.matches("yes|y")) {
                     saveCurrentState();
                 }
+                sound.playSoundClip("Sounds/windowsshutoff.wav");
+                Thread.sleep(3000);
                 System.exit(0);
 
             } else if (response.matches("cheat")) {
@@ -130,17 +134,16 @@ public class Prompter {
                     System.out.println(Question.getCurrentQuestion().getCorrect_answer());
                 }
                 //hacking a room
-            }else if(response.matches("volume up")) {
+            } else if (response.matches("volume up")) {
 
                 if (Global.getVolume() < max_v) {
                     Global.setVolume(Global.getVolume() + .1f);
-                    float display_v =  Global.getVolume() * 100;
+                    float display_v = Global.getVolume() * 100;
                     System.out.println("Volume set to " + display_v);
                 } else {
                     System.out.println("You are the loudest possible");
                 }
-            }
-            else if(response.matches("volume down")) {
+            } else if (response.matches("volume down")) {
 
                 if (Global.getVolume() > min_v) {
                     Global.setVolume(Global.getVolume() - .1f);
@@ -148,18 +151,52 @@ public class Prompter {
                     System.out.println("Volume set to " + display_v);
                 } else {
                     System.out.println("You are the quietest possible");
-            }
-            }else if(response.matches("volume mute")) {
+                }
+            } else if (response.matches("volume mute")) {
                 Global.setMute(true);
+                TextToSpeech.isMuted = true;
                 System.out.println("Muted everything");
-            }
-            else if(response.matches("volume unmute")) {
+            } else if (response.matches("volume unmute")) {
                 Global.setMute(false);
+                TextToSpeech.isMuted = false;
                 System.out.println("Unmuted everything");
-            }else if (response.matches("hack")) {
+            } else if (response.matches("hack")) {
                 //get the current room
                 hackClass();
+                System.out.println(ConsoleColor.GREEN + " NOTHING CAN STOP YOU " + ConsoleColor.RESET);
+                sound.playSoundClip("Sounds/hackerman.wav");
+                Thread.sleep(1000);
                 return "quit";
+            } else if (response.matches("give apple")) {
+                //
+                if (Player.getInventory().contains("Apple")) {
+                    sound.playSoundClip("Sounds/thanks.wav");
+                    hackClass();
+
+                    Player.getInventory().remove("Apple");  
+                    System.out.println(ConsoleColor.GREEN +"                                                  you gave teacher a apple she will let you pass with 2.4 \n                                                  Teacher: 'Awwe your so sweet you get to pass my class' " + ConsoleColor.RESET);
+                }
+                else{
+
+                    System.out.println("You do not have an apple to give to teacher.");
+                }
+                return "quit";
+            } else if (response.matches("show items")) {
+                try {
+                    if (GameClient.items.size() == 0) {
+
+                    }
+                } catch (NullPointerException ex) {
+                    System.out.println(ConsoleColor.RED + "You do not have items in your inventories" + ConsoleColor.RESET);
+                }
+                try {
+                    if (GameClient.items.size() >= 1) {
+                        System.out.println(ConsoleColor.GREEN + "Current items : " + GameClient.items + ConsoleColor.RESET);
+                    }
+                } catch (NullPointerException ex) {
+                    ex.getMessage();
+                }
+
             } else if (response.matches("quit")) {
                 //get the current room
                 return "quit";
@@ -169,7 +206,7 @@ public class Prompter {
         }
     }
 
-    private void hackClass() {
+    private void hackClass() throws Exception {
         String currentLocation = PointSystem.currentPlayer.getLocation().toLowerCase();
         //check if the current room is not a non-subject room
         if (!PointSystem.getNotSubject().contains(currentLocation)) {
@@ -182,9 +219,12 @@ public class Prompter {
                 PointSystem.currentPlayer.setCredit(new PointSystem().getCumulativeScore(3, PointSystem.currentPlayer.getSubjectTaken().size()));
                 PointSystem.changePlayerGrade(PointSystem.currentPlayer);
             }
-
-
         }
+    }
+
+    // getters for commands list
+    public ArrayList<String> getCommands() {
+        return commands;
     }
 
     public static void clearScreen() {

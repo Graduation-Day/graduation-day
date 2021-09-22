@@ -91,8 +91,8 @@ public class Player {
     @Override
     public String toString() {
 
-        return "************    Student's Name: " + getName() + " | Student HP: " + health + " | Student's GPA "
-                + getCredit() + "    **************";
+        return "************    Student's Name: " + getName().toUpperCase() + " | Student HP: " + health + " | Student's CGPA "
+                + getCredit() + "    ***********";
 
     }
 }

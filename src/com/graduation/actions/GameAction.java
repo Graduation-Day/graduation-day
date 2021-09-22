@@ -1,20 +1,31 @@
 package com.graduation.actions;
 
 import com.graduation.client.GameClient;
+import com.graduation.elements.Player;
 import com.graduation.utils.ConsoleColor;
 import com.graduation.utils.Prompter;
+import com.graduation.utils.Sound;
 import com.graduation.utils.readMap;
 import jdk.swing.interop.SwingInterOpUtils;
 
 import java.util.Scanner;
 
 public class GameAction {
+
     private static Scanner action = new Scanner(System.in);
+    Sound sound = new Sound();
+
 
     public static void getAction() throws Exception {
+
         Prompter.clearScreen();
-        System.out.println(GameClient.getPlayer());
         System.out.println(readMap.convertedMap());
+        System.out.println(ConsoleColor.GREEN_BOLD
+                + "                                   *******************************************************************************************");
+        System.out.println("                                   " + GameClient.getPlayer());
+        System.out.println(
+                "                                   ******************************************************************************************* "
+                        + ConsoleColor.RESET);
         showValidCommands();
         String move = GameClient.getPrompter().prompt("Enter a move from above options: \n ");
         String[] moveArray = move.toLowerCase().split(" ");
@@ -35,6 +46,7 @@ public class GameAction {
                     System.out.println(ConsoleColor.RED + "\n\nAht aht.. you didn't enter a valid cardinal direction"
                             + ConsoleColor.RESET);
                     getAction();
+
                 }
                 break;
             case "get":
@@ -51,10 +63,9 @@ public class GameAction {
     }
 
     private static void showValidCommands() {
-        System.out.println("GO " + GameClient.getValidDirections());
         if (GameClient.displayRoomInventory() != null) {
             System.out.println("GET " + "item");
         }
-        System.out.println("H (for help)");
+        System.out.println("GO " + GameClient.getValidDirections());
     }
 }
